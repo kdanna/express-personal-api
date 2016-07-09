@@ -90,12 +90,12 @@ app.get('/api/profile', function api_index(req, res) {
 
 //RESTful Routes
 
-//WORKS. INDEX. This endpoint will return all of the objects in the "favoriteSongs" array
+//WORKS. INDEX. This endpoint will return all of the objects in the "favoriteSongs" array.
 app.get('/api/music', function index(req, res) {
   res.json(favoriteSongs);
 });
 
-//DOESNT WORK. CREATE. This will add to the "favoriteSongs" array
+//DOESNT WORK. CREATE. This will add to the "favoriteSongs" array.
 app.post('/api/music', function create(req, res) {
   var newSong = req.body;
   var nextId = favoriteSongs.length + 1;
@@ -119,7 +119,7 @@ app.get('/api/music/:id', function show(req, res) {
 });
 
 
-// DOESNT WORK. UPDATE.  This endpoint will update a single favoriteSong object
+// DOESNT WORK. UPDATE.  This endpoint will update a single favoriteSong object.
 app.put('/api/music/:id', function update(req, res) {
     var oneToUpdate = parseInt(req.params.id);
     var actualUpdate = req.body;

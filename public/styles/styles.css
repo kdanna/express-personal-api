@@ -1,10 +1,17 @@
 body {
-  color: #333;
-  font-family: Helvetica, Arial, sans-serif;
-  background-color: skyblue; /* Sanity Check! */
+	font-size: 50px;
+  	color: black;
+  	font-family: Helvetica;
+  	background-image: url("/images/woodBackground.jpg");
 }
 
-h1 {
-  margin-top: 100px;
-  text-align: center;
+/*#image{
+	display: inline;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+}*/
+
+h4 {
+	color: black;
 }
