@@ -1,16 +1,18 @@
-var mongoose = require('mongoose'),
+// //This is the schema and model builder
 
-Schema = mongoose.Schema;
+// var mongoose = require('mongoose'),
 
-var SongSchema = new Schema({
-artistName: String,
-songName: String,
-year: Number
-});
+// Schema = mongoose.Schema;
+
+// var SongSchema = new Schema({
+// artistName: String,
+// songName: String,
+// year: Number
+// });
 
 
-//defining the model
-var Song = mongoose.model("Song", SongSchema);
+// //defining the model
+// var Song = mongoose.model("Song", SongSchema);
 
-//exporting the model to all files that have "required" the Song
-module.exports = Song;
+// //exporting the model to all files that have "required" the Song
+// module.exports = Song;
