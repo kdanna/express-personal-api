@@ -1,17 +1,29 @@
 // require express and other modules
-var express = require('express'),
-    app = express();
+var express = require('express');
+var mongoose = require('mongoose'); //KD-adding to require mongoose module
+// var handlebars = require('express-handlebars');//KD-adding to require handlebars module
+var bodyParser = require('body-parser'); // parse incoming urlencoded form data & populate req.body obj
+// var routes = require('./config/routes'); //KD - adding to require 
 
-// parse incoming urlencoded form data
-// and populate the req.body object
-var bodyParser = require('body-parser');
+var app = express();
+
+
+// mongoose.connect('mongodb://localhost:27017/profile-app'); //KD - adding to connect to mongodb via default
+
+
+app.use(bodyParser.json()); //KD
 app.use(bodyParser.urlencoded({ extended: true }));
+
+//KD - Set up our app to accept to use Handlebars
+// app.set('views', path.join(__dirname, 'views'));
+// app.engine('handlebars', handlebars({defaultLayout: 'main'}));
+// app.set('view engine', 'handlebars');
 
 /************
  * DATABASE *
  ************/
 
-// var db = require('./models');
+var db = require('./models');
 
 /**********
  * ROUTES *
@@ -30,6 +42,7 @@ app.get('/', function homepage(req, res) {
 });
 
 
+
 /*
  * JSON API Endpoints
  */
@@ -37,17 +50,34 @@ app.get('/', function homepage(req, res) {
 app.get('/api', function api_index(req, res) {
   // TODO: Document all your api endpoints below
   res.json({
-    woops_i_has_forgot_to_document_all_my_endpoints: true, // CHANGE ME ;)
+    Is_this_Kayce_Danna: true, // CHANGE ME ;)
     message: "Welcome to my personal api! Here's what you need to know!",
-    documentation_url: "https://github.com/example-username/express_self_api/README.md", // CHANGE ME
-    base_url: "http://YOUR-APP-NAME.herokuapp.com", // CHANGE ME
+    documentation_url: "https://github.com/kdanna/express-personal-api", // CHANGE ME
+    base_url: "https://quiet-taiga-58200.herokuapp.com/", // CHANGE ME
     endpoints: [
       {method: "GET", path: "/api", description: "Describes all available endpoints"},
-      {method: "GET", path: "/api/profile", description: "Data about me"}, // CHANGE ME
-      {method: "POST", path: "/api/campsites", description: "E.g. Create a new campsite"} // CHANGE ME
+      {method: "GET", path: "/api/profile", description: "All about Kayce"}, // CHANGE ME
+      {method: "POST", path: "/api/music", description: "Post a favorite song"} // CHANGE ME
     ]
-  })
+  });
 });
+
+
+app.get('/api/profile', function api_index(req, res) {
+  res.json({
+    name:"Kayce Danna",
+    github_link: "https://github.com/kdanna/express-personal-api",
+    github_profile_image: "https://avatars2.githubusercontent.com/u/18216073?v=3&s=460",
+    current_city: "Denver, CO",
+    age: "30 years old",
+    profession: "jr. web developer",
+    hobbies: ["running", "skiing", "mountain biking", "camping", "live music", "park days", "cooking"]
+  });
+});
+
+
+
+
 
 /**********
  * SERVER *
