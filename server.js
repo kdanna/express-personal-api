@@ -6,7 +6,7 @@ var bodyParser = require('body-parser'); // parse incoming urlencoded form data 
 // var routes = require('./config/routes'); //KD - adding to require 
 
 var app = express();
-
+var port = process.env.PORT || 3000;
 
 // mongoose.connect('mongodb://localhost:27017/profile-app'); //KD - adding to connect to mongodb via default
 
@@ -67,8 +67,9 @@ app.get('/api', function api_index(req, res) {
     endpoints: [
       {method: "GET", path: "/api", description: "Describes all available endpoints"},
       {method: "GET", path: "/api/profile", description: "All about Kayce"},
-      {method: "POST", path: "/api/music", description: "Post a favorite song"},
-      {method: "GET", path: "/api/music", description: "Post a favorite song"}  // CHANGE ME
+      {method: "GET", path: "/api/music", description: "Post a favorite song"},
+      {method: "POST", path: "/api/music", description: "Post a favorite song. Artist Name, Song Title, and Year it was released"},
+       // CHANGE ME
     ]
   });
 });
@@ -117,7 +118,7 @@ app.get('/api/music', function index(req, res) {
 // });
 
 
-// WORK!  SHOW. This endpoint returns a single favoriteSong object based on the user input.
+// WORKS!  SHOW. This endpoint returns a single favoriteSong object based on the user input.
 app.get('/api/music/:id', function show(req, res) {
   var userWants = {"rank":req.params.id};
   db.Song.findOne(userWants, function (err, song){
@@ -142,18 +143,18 @@ app.get('/api/music/:id', function show(req, res) {
 //     }   
 //   });
 
-// //DOSENT WORK.  DELETE. This endpoint should delete a favoriteSong and 
-// app.delete('/api/music/:id', function destroy(req, res) {
-//   var oneToDelete = parseInt(req.params.id);
-//   console.log(req.params);
-//   for(var i = 0; i < favoriteSongs.length; i++){
-//     if (oneToDelete === favoriteSongs[i]._id){ 
-//       console.log("does this delete works?");
-//        favoriteSongs.splice(i, 1);
-//     }
-//   }
-//   res.json(favoriteSongs);
-//  });
+//DELETE. This endpoint should delete a favoriteSong and 
+app.delete('/api/music/:id', function destroy(req, res) {
+  var oneToDelete = parseInt(req.params.id);
+  console.log(req.params);
+  for(var i = 0; i < db.Song.length; i++){
+    if (oneToDelete === db.Song[i].rank){ 
+       console.log("does this delete works?");
+       db.Song.splice(i, 1);
+    }
+  }
+  res.json(db.Song);
+ });
 
 
 
