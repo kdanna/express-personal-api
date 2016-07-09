@@ -1,7 +1,7 @@
 // //This is the index that server.js pulls from.
 
 var mongoose = require("mongoose");
-mongoose.connect( process.env.MONGOLAB_URI ||
+mongoose.connect( process.env.MONGODB_URI ||  //this might need to change to MONGODB
                   process.env.MONGOHQ_URL ||
                   "mongodb://localhost/personal-api");
 
