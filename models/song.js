@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
 var SongSchema = new Schema({
+rank: Number,
 artistName: String,
 songName: String,
 year: Number

@@ -99,28 +99,34 @@ app.get('/api/music', function index(req, res) {
 });
 
 
-// //DOESNT WORK. CREATE. This will add to the "favoriteSongs" array.
+//I DONT KNOW HOW TO TEST but I think it's correct.  CREATE. This will add to the "favoriteSongs" array.
 // app.post('/api/music', function create(req, res) {
-//   var newSong = req.body;
-//   var nextId = favoriteSongs.length + 1;
-//   newSong._id = nextId;
-  
-//   favoriteSongs.push(newSong);
-//   res.json(favoriteSongs);
-
+//   var newSong = new db.Song({
+//     rank: req.body.rank,
+//     artistName: req.body.artistName,
+//     songName: req.body.songName,
+//     year: req.body.year,
+//   });
+//     newSong.save(function(err, songs){
+//       if (err) {
+//         return console.log("create error: " + err);
+//       }
+//       console.log("created ", songs.songName);
+//       res.json(song);
+//     });
 // });
 
 
-// //WORKS,  SHOW. This endpoint returns a single favoriteSong object based on the user input.
-// app.get('/api/music/:id', function show(req, res) {
-//    var idPicked = req.params.id; //sends user input to var 
-//    var findId = favoriteSongs.filter(function(songs){  // if the loop object is equal to the param, return it
-//     return (parseInt(idPicked) === song._id);
-//    })[0];
-
-//    res.json(findId);
-
-// });
+// WORK!  SHOW. This endpoint returns a single favoriteSong object based on the user input.
+app.get('/api/music/:id', function show(req, res) {
+  var userWants = {"rank":req.params.id};
+  db.Song.findOne(userWants, function (err, song){
+    if(err){
+      console.log(err);
+    } 
+      res.json(song);
+   });
+  });
 
 
 // // DOESNT WORK. UPDATE.  This endpoint will update a single favoriteSong object.
