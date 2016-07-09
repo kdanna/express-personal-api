@@ -2,31 +2,36 @@
 // // simply run: `node seed.js` from the root of this project folder.
 
 // var mongoose = require('mongoose');
-// var db = require('./models/song.js');
+var db = require('./models');
 // var conn = mongoose.createConnection('mongodb://localhost/personal-api');
 
-// db.Song.remove({}, function(err) {
-//   if (err) {
-//     console.log("ERROR:", err);
-//   }
-// });
-
-
-// var favoriteSongs =  [
-// 	{artistName:"testing 1", songName:"test 1", year:"2015"},
-// 	{artistName:"testing 2", songName:"test 2", year: "2016"},
-// 	{artistName:"testing 3", songName:"test 3", year: "2016"}
-// ];
 
 
 
+var favoriteSongs =  [
+	{artistName:"testing 1", songName:"test 1", year:"2015"},
+	{artistName:"testing 2", songName:"test 2", year: "2016"},
+	{artistName:"testing 3", songName:"test 3", year: "2016"},
+	{artistName:"testing 4", songName:"test 4", year:"2015"},
+	{artistName:"testing 5", songName:"test 5", year: "2013"},
+	{artistName:"testing 6", songName:"test 6", year: "2012"}
+	];
 
 
-// db.Song.create(favoriteSongs, function(err, song){
-//   if (err){
-// 	 return console.log("Error:", err);
-//  }
-// console.log("Created new song", song._id);
-// // process.exit(); // we're all done! Exit the program.
-//   mongoose.connection.close();
-// });
+db.Song.remove({}, function(err, songs){
+  if(err) {
+    console.log('Error occurred in remove', err);
+  } else {
+    console.log('removed all songs');
+
+    // create new records based on the object favorite songs
+    db.Song.create(favoriteSongs, function(err, songs){
+      if (err) { return console.log('err', err); }
+      console.log("created", favoriteSongs.length, "songs");
+      process.exit();
+    });
+  }
+});
+
+
+

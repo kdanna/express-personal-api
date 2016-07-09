@@ -1,14 +1,21 @@
-// //This is the controller
+// //This is the index that server.js pulls from.
 
-// var mongoose = require("mongoose");
-// mongoose.connect( process.env.MONGOLAB_URI ||
-//                   process.env.MONGOHQ_URL ||
-//                   "mongodb://localhost/personal-api");
-
-// var Song = require("./song.js");
+var mongoose = require("mongoose");
+mongoose.connect( process.env.MONGOLAB_URI ||
+                  process.env.MONGOHQ_URL ||
+                  "mongodb://localhost/personal-api");
 
 
-// // //insert musicController 
+module.exports.Song = require("./song.js");
+
+
+
+
+
+
+
+
+// Shold this go from to another file?? musicController 
 
 // // var musicController = {
 // //   index: function(req, res) {
