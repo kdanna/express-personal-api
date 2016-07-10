@@ -14,7 +14,8 @@ var port = process.env.PORT || 3000;
 app.use(bodyParser.json()); //KD
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//KD - Set up our app to accept to use Handlebars
+// Don't need to use
+// Set up our app to accept to use Handlebars
 // app.set('views', path.join(__dirname, 'views'));
 // app.engine('handlebars', handlebars({defaultLayout: 'main'}));
 // app.set('view engine', 'handlebars');
@@ -67,14 +68,17 @@ app.get('/api', function api_index(req, res) {
     endpoints: [
       {method: "GET", path: "/api", description: "Describes all available endpoints"},
       {method: "GET", path: "/api/profile", description: "All about Kayce"},
-      {method: "GET", path: "/api/music", description: "Post a favorite song"},
+      {method: "GET", path: "/api/music", description: "Get list of favorite songs"},
+      {method: "GET", path: "/api/music/:id", description: "Get a favorite song. Search by rank #."},
+      {method: "PUT", path: "/api/music/:id", description: "Update a favorite song"},
+      {method: "DELETE",path: "/api/music/:id", description: "Delete if it isn't a favorite song"},
       {method: "POST", path: "/api/music", description: "Post a favorite song. Artist Name, Song Title, and Year it was released"},
        // CHANGE ME
     ]
   });
 });
 
-//WORKS.This will return all my profile information that is outlined below
+//WORKS! This will return all my profile information that is outlined below
 app.get('/api/profile', function api_index(req, res) {
   res.json({
     name:"Kayce Danna",
@@ -91,7 +95,7 @@ app.get('/api/profile', function api_index(req, res) {
 
 //RESTful Routes
 
-//WORKS. INDEX. This endpoint will return all of the objects in the "favoriteSongs" array.
+//WORKS! INDEX. This endpoint will return all of the objects in the "favoriteSongs" array.
 app.get('/api/music', function index(req, res) {
     db.Song.find(function(err, songs){
     if (err) { return console.log("index error: " + err); }
@@ -100,25 +104,25 @@ app.get('/api/music', function index(req, res) {
 });
 
 
-//I DONT KNOW HOW TO TEST but I think it's correct.  CREATE. This will add to the "favoriteSongs" array.
-// app.post('/api/music', function create(req, res) {
-//   var newSong = new db.Song({
-//     rank: req.body.rank,
-//     artistName: req.body.artistName,
-//     songName: req.body.songName,
-//     year: req.body.year,
-//   });
-//     newSong.save(function(err, songs){
-//       if (err) {
-//         return console.log("create error: " + err);
-//       }
-//       console.log("created ", songs.songName);
-//       res.json(song);
-//     });
-// });
+//WORKS!  CREATE. This will add to the "favoriteSongs" array.
+app.post('/api/music', function create(req, res) {
+  var newSong = new db.Song({
+    rank: req.body.rank,
+    artistName: req.body.artistName,
+    songName: req.body.songName,
+    year: req.body.year,
+  });
+    newSong.save(function(err, songs){
+      if (err) {
+        return console.log("create error: " + err);
+      }
+      console.log("created ", songs.songName);
+      res.json(songs);
+    });
+});
 
 
-// WORKS!  SHOW. This endpoint returns a single favoriteSong object based on the user input.
+// WORKS!  SHOW. This endpoint returns a single favoriteSong object based on the user input of rank #.
 app.get('/api/music/:id', function show(req, res) {
   var userWants = {"rank":req.params.id};
   db.Song.findOne(userWants, function (err, song){
@@ -130,32 +134,26 @@ app.get('/api/music/:id', function show(req, res) {
   });
 
 
-// // DOESNT WORK. UPDATE.  This endpoint will update a single favoriteSong object.
-// app.put('/api/music/:id', function update(req, res) {
-//     var oneToUpdate = parseInt(req.params.id);
-//     var actualUpdate = req.body;
-//     for(var i = 0; i < favoriteSongs.length; i ++){
-//       if (oneToUpdate === favoriteSongs[i]._id){ 
-//         actualUpdate._id = oneToUpdate;
-//         favoriteSongs[i] = actualUpdate;
-//         res.json(favoriteSongs[i]); 
-//       }
-//     }   
-//   });
+// DOESNT WORK. UPDATE.  This endpoint will update a single favoriteSong object.
+app.put('/api/music/:id', function update(req, res) {
+    var actualUpdate = req.body;
+    var oneToUpdate = parseInt(req.params.id);
+    for(var i = 0; i < db.Song.length; i++){ 
+      if (oneToUpdate === db.Song[i]._id){ 
+        // actualUpdate._id = oneToUpdate;
+        db.Song[i] = actualUpdate;
+        res.json(db.Song); 
+      }
+    }   
+  });
 
-//DELETE. This endpoint should delete a favoriteSong and 
-app.delete('/api/music/:id', function destroy(req, res) {
-  var oneToDelete = parseInt(req.params.id);
-  console.log(req.params);
-  for(var i = 0; i < db.Song.length; i++){
-    if (oneToDelete === db.Song[i].rank){ 
-       console.log("does this delete works?");
-       db.Song.splice(i, 1);
-    }
-  }
-  res.json(db.Song);
+//WORKS!  DELETE. This endpoint should delete a favoriteSong and 
+app.delete('/api/music/:id', function (req, res) {
+ var oneToDelete = req.params.id;
+ db.Song.findOneAndRemove({ _id: oneToDelete}, function (err, deletedSong) {
+   res.json(deletedSong);
  });
-
+});
 
 
 /**********

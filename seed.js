@@ -9,12 +9,16 @@ var db = require('./models');
 
 
 var favoriteSongs =  [
-	{rank: 1, artistName:"testing 1", songName:"test 1", year:"2015"},
-	{rank: 2, artistName:"testing 2", songName:"test 2", year: "2016"},
-	{rank: 3, artistName:"testing 3", songName:"test 3", year: "2016"},
-	{rank: 4, artistName:"testing 4", songName:"test 4", year:"2015"},
-	{rank: 5, artistName:"testing 5", songName:"test 5", year: "2013"},
-	{rank: 6, artistName:"testing 6", songName:"test 6", year: "2012"}
+  {rank: 1, artistName:"Sigur Ros", songName:"Untitled 3", year:"2002"},
+	{rank: 2, artistName:"Radiohead", songName:"Idioteque", year:"2000"},
+	{rank: 3, artistName:"Built to Spill", songName:"You Were Right", year: "1999"},
+	{rank: 4, artistName:"Wilco", songName:"Hell is Chrome", year: "2004"},
+	{rank: 5, artistName:"Rilo Kiley", songName:"A Better Son / Daughter", year:"2002"},
+	{rank: 6, artistName:"Elliot Smith", songName:"Son of Sam", year: "2000"},
+	{rank: 7, artistName:"Joanna Newsom", songName:"The Book of Right-On", year: "2004"},
+  {rank: 8, artistName:"Wolf Parade", songName:"You are a Runner and I am my Father's Son", year:"2005"},
+  {rank: 9, artistName:"Portishead", songName:"Roads", year: "1994"},
+  {rank: 10, artistName:"Velvet Underground", songName:"Oh! Sweet Nuthin", year: "1970"}
 	];
 
 
