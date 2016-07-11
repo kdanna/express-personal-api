@@ -136,15 +136,14 @@ app.get('/api/music/:id', function show(req, res) {
 
 // DOESNT WORK. UPDATE.  This endpoint will update a single favoriteSong object.
 app.put('/api/music/:id', function update(req, res) {
-    var actualUpdate = req.body;
-    var oneToUpdate = parseInt(req.params.id);
-    for(var i = 0; i < db.Song.length; i++){ 
-      if (oneToUpdate === db.Song[i]._id){ 
-        // actualUpdate._id = oneToUpdate;
-        db.Song[i] = actualUpdate;
-        res.json(db.Song); 
-      }
-    }   
+  var updateID = req.params.id;
+  var update = req.body;
+  db.Song.findOneAndUpdate({_id: updateID}, update, function (err, song){
+    if(err){
+      console.log(err);
+    } 
+      res.json(song);
+   });
   });
 
 //WORKS!  DELETE. This endpoint should delete a favoriteSong and 
